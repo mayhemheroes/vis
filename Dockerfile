@@ -1,5 +1,5 @@
 # Run 'make docker' to build a statically linked vis executable!
-FROM i386/alpine:3.23
+FROM i386/alpine:3.16
 RUN apk update && apk add --upgrade --no-cache \
 	acl-dev \
 	acl-static \
@@ -7,8 +7,8 @@ RUN apk update && apk add --upgrade --no-cache \
 	fortify-headers \
 	gcc \
 	libtermkey-dev \
-	lua5.4-dev \
-	lua5.4-lpeg \
+	lua5.3-dev \
+	lua5.3-lpeg \
 	lua-lpeg-dev \
 	make \
 	musl-dev \
@@ -17,10 +17,9 @@ RUN apk update && apk add --upgrade --no-cache \
 	tar \
 	wget \
 	xz \
-	xz-dev \
-	xz-static
-RUN sed -i 's/Libs: /Libs: -L${INSTALL_CMOD} /' /usr/lib/pkgconfig/lua5.4.pc
-RUN mv /usr/lib/lua/5.4/lpeg.a /usr/lib/lua/5.4/liblpeg.a
+	xz-dev
+RUN sed -i 's/Libs: /Libs: -L${INSTALL_CMOD} /' /usr/lib/pkgconfig/lua5.3.pc
+RUN mv /usr/lib/lua/5.3/lpeg.a /usr/lib/lua/5.3/liblpeg.a
 RUN sed -i 's/-ltermkey/-ltermkey -lunibilium/' /usr/lib/pkgconfig/termkey.pc
 # TODO contribute a proper libuntar package to Alpine
 RUN mkdir -p /build
